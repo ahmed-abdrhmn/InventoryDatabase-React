@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 function MyNavbar(){
     return (
-        <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
+        <Navbar expand="lg" className="bg-primary" data-bs-theme="dark" style={{position: 'fixed', top: 0, left: 0, width: '100%'}}>
         <Container>
           <Navbar.Brand>Inventory</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

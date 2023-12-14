@@ -7,8 +7,10 @@ import { Outlet } from 'react-router-dom';
 
 function App() {
   return <>
+    <div style={{whiteSpace: 'nowrap', marginTop: '4em'}}>
+      <Outlet />
+    </div>
     <MyNavbar />
-    <Outlet />
   </>
 }
 

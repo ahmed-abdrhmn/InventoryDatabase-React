@@ -9,3 +9,11 @@ body, html {
     justify-content: center;
     display: flex;
 }*/
+
+.card-text div {
+    margin: 0em 2em;
+} 
+
+.card-text p {
+    margin: 0em;
+}
