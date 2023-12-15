@@ -16,6 +16,7 @@ import Branch from './components/Pages/Branch.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-icons/font/bootstrap-icons.min.css'
 
 //Setting up all the routes that will be used in this application
 const router = createBrowserRouter([

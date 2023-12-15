@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 
 function App() {
   return <>
-    <div style={{whiteSpace: 'nowrap', marginTop: '4em'}}>
+    <div className="main-div">
       <Outlet />
     </div>
     <MyNavbar />
