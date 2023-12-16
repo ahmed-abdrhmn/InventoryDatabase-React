@@ -7,7 +7,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
-import Headers from './components/Pages/Header.tsx';
+import Headers from './components/Pages/Header/Header.tsx';
 import Inventory from './components/Pages/Inventory.tsx';
 import Package from './components/Pages/Package.tsx';
 import Item from './components/Pages/Item.tsx';

@@ -1,36 +1,9 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Card from "react-bootstrap/Card"
-import { HeaderEntity, deleteHeader, getHeaders } from "../../query/headerService";
+import { HeaderEntity, deleteHeader, getHeaders } from "../../../query/headerService";
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal'
-
-function DeleteModal({show, onYesClick, onNoClick}: {show:boolean, onYesClick ():void, onNoClick ():void}){
-    return <Modal show={show} centered>
-        <Modal.Header>
-            <Modal.Title>Delete</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-            <p>Are you sure you want to delete this object?</p>
-        </Modal.Body>
-
-        <Modal.Footer style={{display:'flex',justifyContent:'space-between'}}>
-            <Button variant="primary" onClick={onNoClick}>No</Button>
-            <Button variant="danger" onClick={onYesClick}>Yes</Button>
-        </Modal.Footer>
-    </Modal>
-}
-
-// function useModal(){
-//     const [show, setShow] = useState(false);
-//     const [selectedId, setSelectedId] = useState(-1);
-
-//     return {
-//         openModal: () => setShow(true),
-//         closeModal: () => setShow(false)
-//     }
-// }
+import useDeleteModal from "./Modals/DeleteModal";
 
 function Headers(): ReactNode[] | ReactNode{
     //React Query related hooks
@@ -41,10 +14,10 @@ function Headers(): ReactNode[] | ReactNode{
         onSuccess: () => client.invalidateQueries({queryKey: ['header']}) 
     })
 
-    //manage modal state
-    const [show, setShow] = useState(false);
-    const [selectedId, setSelectedId] = useState(-1);
+    //Delete Modal
+    const DeleteModal = useDeleteModal();
 
+    //Check react query states
     if (isPending){
         return <h1> Fetching Data... </h1>
     }
@@ -56,16 +29,22 @@ function Headers(): ReactNode[] | ReactNode{
         </>
     }
 
+    async function deleteItem(id: number){
+        let del: boolean = await DeleteModal.Open(); //wait until the dialog closes
+        if (del) {
+            delHeaderMut.mutate(id);
+        }
+    }
 
     //The list of Cards
     const Cards = data.map((i: HeaderEntity)=> (
-        <Card style={{display: 'inline-block', margin: '0em 0.5em'}}> {/*We must use inline style in this context or else it will be overidden internally*/}
+        <Card style={{display: 'inline-block', margin: '0em 0.5em'}} key={i.inventoryInHeaderId}> {/*We must use inline style in this context or else it will be overidden internally*/}
             <Card.Body>
                 <Card.Title>
                     <b>HeaderId:</b> {i.inventoryInHeaderId}
                 </Card.Title>
                 <hr />
-                <Card.Text>
+                <Card.Text as={'div'}>
                     <p><b>Branch:</b></p>
                     <div>
                         <p><b>BranchId:</b> {i.branch.branchId}</p>
@@ -79,7 +58,7 @@ function Headers(): ReactNode[] | ReactNode{
                 <hr />
                 <div className="button-base">
                     <Button><i className="bi bi-pen-fill"></i></Button> {/*Edit button*/}
-                    <Button variant="danger" onClick={()=>{setShow(true); setSelectedId(i.inventoryInHeaderId)}}><i className="bi bi-trash-fill"></i></Button> {/*Delete button*/}
+                    <Button variant="danger" onClick={()=>deleteItem(i.inventoryInHeaderId)}><i className="bi bi-trash-fill"></i></Button> {/*Delete button*/}
                 </div>
             </Card.Body>
         </Card>))
@@ -88,12 +67,7 @@ function Headers(): ReactNode[] | ReactNode{
         return <>
             {Cards}
             <Button className="add-button"><i className="bi bi-plus-lg"></i></Button>
-            <DeleteModal 
-                show={show} 
-                onNoClick={()=>{setShow(false); setSelectedId(-1)}}
-                onYesClick={()=>{setShow(false); delHeaderMut.mutateAsync(selectedId); setSelectedId(-1)}}
-            
-            />
+            <DeleteModal.View />
         </>
 }
 

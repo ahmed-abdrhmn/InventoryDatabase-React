@@ -39,14 +39,17 @@ for (let i = 0; i < 14; i++){
 // }
 
 async function getHeaders(): Promise<HeaderEntity[]>{
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     return headers;
 }
 
 async function getHeaderById(id: number){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     return headers.find(x=>x.inventoryInHeaderId == id);
 }
 
 async function deleteHeader(id: number){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     headers = headers.filter(x=> x.inventoryInHeaderId !== id);
 }
 
