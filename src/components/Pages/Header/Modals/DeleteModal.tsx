@@ -29,7 +29,7 @@ function useDeleteModal(){
 
         return new Promise<boolean>((resolve)=>{
             console.log('Promise Began executing')
-            setOnExit(()=>(del: boolean)=>{     //Assigning a function that returns a function since set* of react treats functions specially
+            setOnExit(()=>(del: boolean)=>{     //Assigning a function that returns a function since set* functions of react treats functions specially
                 console.log('OnExit has been done')
                 console.log(del)
                 setShow(false);

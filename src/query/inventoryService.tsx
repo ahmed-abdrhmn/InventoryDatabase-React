@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface HeaderEntity {
+interface InventoryEntity {
     inventoryInHeaderId: number,
     branch: {
         branchId: number,
@@ -12,36 +12,36 @@ interface HeaderEntity {
     remarks: string
 }
 
-async function getHeaders(): Promise<HeaderEntity[]>{
+async function getInventories(): Promise<InventoryEntity[]>{
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
-        const res = await axios.get('http://localhost:5230/api/header/');
+        const res = await axios.get('http://localhost:5230/api/inventory/');
         return res.data;
     } catch (e: any){
         throw e;
     }
 }
 
-async function getHeaderById(id: number): Promise<HeaderEntity>{
+async function getInventoryById(id: number): Promise<InventoryEntity>{
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
-        const res = await axios.get('http://localhost:5230/api/header/'+id);
+        const res = await axios.get('http://localhost:5230/api/inventory/'+id);
         return res.data;
     } catch (e: any){
         throw e;
     }   
 }
 
-async function deleteHeader(id: number): Promise<void>{
+async function deleteInventory(id: number): Promise<void>{
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
-        await axios.delete('http://localhost:5230/api/header/'+id);
+        await axios.delete('http://localhost:5230/api/inventory/'+id);
     } catch (e: any){
         throw e;
     }   
 }
 
-async function addHeader(e: any){
+async function addInventory(e: any){
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
@@ -52,10 +52,10 @@ async function addHeader(e: any){
     }
     
     try{
-        await axios.post('http://localhost:5230/api/header/',toSend);
+        await axios.post('http://localhost:5230/api/inventory/',toSend);
     } catch (e: any){
         throw e;
     }  
 }
 
-export { type HeaderEntity, getHeaders, getHeaderById, deleteHeader, addHeader};
+export { type InventoryEntity, getInventories, getInventoryById, deleteInventory, addInventory};
