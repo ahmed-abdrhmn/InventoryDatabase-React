@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormGroup } from 'react-bootstrap';
 
-function AddModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: any)=>void}){
+function UpdateModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: any)=>void}){
     const branchIdRef: any = useRef(null);
     const docDateRef: any = useRef(null);
     const referenceRef: any = useRef(null);
@@ -23,27 +23,27 @@ function AddModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: 
 
     return <Modal show={show} centered>
         <Modal.Header>
-            <Modal.Title>Add</Modal.Title>
+            <Modal.Title>Update</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form>
                 <FormGroup className="mb-3">
                     <Form.Label>BranchId</Form.Label>
-                    <Form.Select ref={branchIdRef}>
-                        {data.branches.map((x: any) => <option value={x} key={x}>{x}</option>)}
+                    <Form.Select ref={branchIdRef} defaultValue={data.currentData?.branch?.branchId || ''}>
+                        {data.branches.map((x: any) => <option defaultValue={x} key={x}>{x}</option>)}
                     </Form.Select>
                 </FormGroup>
-                <FormGroup className="mb-3" controlId="DATE">
+                <FormGroup className="mb-3">
                     <Form.Label>DocDate</Form.Label>
-                    <Form.Control type="date" ref={docDateRef}></Form.Control>
+                    <Form.Control type="date" ref={docDateRef} defaultValue={data.currentData?.docDate || ''}></Form.Control>
                 </FormGroup>
                 <FormGroup className="mb-3">
                     <Form.Label>Reference</Form.Label>
-                    <Form.Control type="text" ref={referenceRef}></Form.Control>
+                    <Form.Control type="text" ref={referenceRef} defaultValue={data.currentData?.reference || ''}></Form.Control>
                 </FormGroup>
                 <FormGroup className="mb-3">
                     <Form.Label>Remarks</Form.Label>
-                    <Form.Control type="text" ref={remarksRef}></Form.Control>
+                    <Form.Control type="text" ref={remarksRef} defaultValue={data.currentData?.remarks || ''}></Form.Control>
                 </FormGroup>
             </Form>
         </Modal.Body>
@@ -56,7 +56,7 @@ function AddModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: 
 }
 
 //I wanted to provide an easier to grasp interface for the delete modal
-function useAddModal(){
+function useUpdateModal(){
     const [show, setShow] = useState(false);
     const [data, setData] = useState({branches:[]});
     const [onExit, setOnExit]: any[] = useState();
@@ -77,10 +77,10 @@ function useAddModal(){
     }
 
     return {
-        View: () => <AddModal show={show} data={data} onExit={onExit}/>, //exported as function so we can use the JSX syntax
+        View: () => <UpdateModal show={show} data={data} onExit={onExit}/>, //exported as function so we can use the JSX syntax
         Open: OpenModal
     }
 }
 
 
-export default useAddModal;
+export default useUpdateModal;

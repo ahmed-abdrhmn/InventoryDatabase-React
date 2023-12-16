@@ -4,8 +4,10 @@ import Card from "react-bootstrap/Card"
 import { HeaderEntity, addHeader, deleteHeader, getHeaders } from "../../../query/headerService";
 import { getBranches } from "../../../query/branchService";
 import Button from 'react-bootstrap/Button';
+
 import useDeleteModal from "./Modals/DeleteModal";
 import useAddModal from "./Modals/AddModal";
+import useUpdateModal from "./Modals/UpdateModal";
 
 function Headers(): ReactNode[] | ReactNode{
     //React Query related hooks
@@ -26,6 +28,7 @@ function Headers(): ReactNode[] | ReactNode{
     //Modals
     const DeleteModal = useDeleteModal();
     const AddModal = useAddModal();
+    const UpdateModal = useUpdateModal();
 
     //Check react query states
     if (headers.isPending){
@@ -59,6 +62,20 @@ function Headers(): ReactNode[] | ReactNode{
         }
     }
 
+    async function updateItem(id: number){
+        let branchIds: number[] = []
+        if (branches.isSuccess){
+            branchIds = branches.data.map(x => x.branchId)
+        }
+        
+        await UpdateModal.Open(
+            {
+                branches:branchIds,
+                currentData: headers?.data?.find(x => x.inventoryInHeaderId == id) //I don't think I need to check if headers.data is loaded right?
+            }
+        ); //wait until the dialog closes
+    }
+
     //The list of Cards
     const Cards = headers.data.map((i: HeaderEntity)=> (
         <Card style={{display: 'inline-block', margin: '0em 0.5em'}} key={i.inventoryInHeaderId}> {/*We must use inline style in this context or else it will be overidden internally*/}
@@ -80,7 +97,7 @@ function Headers(): ReactNode[] | ReactNode{
                 </Card.Text>
                 <hr />
                 <div className="button-base">
-                    <Button><i className="bi bi-pen-fill"></i></Button> {/*Edit button*/}
+                    <Button><i className="bi bi-pen-fill" onClick={()=>updateItem(i.inventoryInHeaderId)}></i></Button> {/*Edit button*/}
                     <Button variant="danger" onClick={()=>deleteItem(i.inventoryInHeaderId)}><i className="bi bi-trash-fill"></i></Button> {/*Delete button*/}
                 </div>
             </Card.Body>
@@ -92,6 +109,7 @@ function Headers(): ReactNode[] | ReactNode{
             <Button className="add-button" onClick={()=>addItem()}><i className="bi bi-plus-lg"></i></Button> {/*Add Button*/}
             <DeleteModal.View />
             <AddModal.View />
+            <UpdateModal.View />
         </>
 }
 
