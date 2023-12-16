@@ -1,12 +1,12 @@
 import { ReactNode, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Card from "react-bootstrap/Card"
-import { Header, getHeaders } from "../../query/header";
+import { HeaderEntity, deleteHeader, getHeaders } from "../../query/headerService";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 
-function DeleteModal({show}:{show:boolean}){
-    return <Modal show={show}>
+function DeleteModal({show, onYesClick, onNoClick}: {show:boolean, onYesClick ():void, onNoClick ():void}){
+    return <Modal show={show} centered>
         <Modal.Header>
             <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
@@ -16,14 +16,34 @@ function DeleteModal({show}:{show:boolean}){
         </Modal.Body>
 
         <Modal.Footer style={{display:'flex',justifyContent:'space-between'}}>
-            <Button variant="primary">No</Button>
-            <Button variant="danger">Yes</Button>
+            <Button variant="primary" onClick={onNoClick}>No</Button>
+            <Button variant="danger" onClick={onYesClick}>Yes</Button>
         </Modal.Footer>
     </Modal>
 }
 
+// function useModal(){
+//     const [show, setShow] = useState(false);
+//     const [selectedId, setSelectedId] = useState(-1);
+
+//     return {
+//         openModal: () => setShow(true),
+//         closeModal: () => setShow(false)
+//     }
+// }
+
 function Headers(): ReactNode[] | ReactNode{
-    const {isPending, isError, data, error} = useQuery({queryKey: ['inventory'],queryFn: getHeaders})
+    //React Query related hooks
+    const {isPending, isError, data, error} = useQuery({queryKey: ['header'],queryFn: getHeaders})
+    const client = useQueryClient()
+    const delHeaderMut = useMutation(
+        {mutationFn: deleteHeader,
+        onSuccess: () => client.invalidateQueries({queryKey: ['header']}) 
+    })
+
+    //manage modal state
+    const [show, setShow] = useState(false);
+    const [selectedId, setSelectedId] = useState(-1);
 
     if (isPending){
         return <h1> Fetching Data... </h1>
@@ -38,7 +58,7 @@ function Headers(): ReactNode[] | ReactNode{
 
 
     //The list of Cards
-    const Cards = data.map((i: Header)=> (
+    const Cards = data.map((i: HeaderEntity)=> (
         <Card style={{display: 'inline-block', margin: '0em 0.5em'}}> {/*We must use inline style in this context or else it will be overidden internally*/}
             <Card.Body>
                 <Card.Title>
@@ -58,8 +78,8 @@ function Headers(): ReactNode[] | ReactNode{
                 </Card.Text>
                 <hr />
                 <div className="button-base">
-                    <Button><i className="bi bi-pen-fill"></i></Button>
-                    <Button variant="danger"><i className="bi bi-trash-fill"></i></Button>
+                    <Button><i className="bi bi-pen-fill"></i></Button> {/*Edit button*/}
+                    <Button variant="danger" onClick={()=>{setShow(true); setSelectedId(i.inventoryInHeaderId)}}><i className="bi bi-trash-fill"></i></Button> {/*Delete button*/}
                 </div>
             </Card.Body>
         </Card>))
@@ -68,7 +88,12 @@ function Headers(): ReactNode[] | ReactNode{
         return <>
             {Cards}
             <Button className="add-button"><i className="bi bi-plus-lg"></i></Button>
-            <DeleteModal show={true}/>
+            <DeleteModal 
+                show={show} 
+                onNoClick={()=>{setShow(false); setSelectedId(-1)}}
+                onYesClick={()=>{setShow(false); delHeaderMut.mutateAsync(selectedId); setSelectedId(-1)}}
+            
+            />
         </>
 }
 
