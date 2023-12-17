@@ -83,8 +83,8 @@ function AddModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: 
         </Modal.Body>
 
         <Modal.Footer style={{display:'flex',justifyContent:'space-between'}}>
-            <Button variant="primary" onClick={() => returnData()}>Ok</Button>
             <Button variant="warning" onClick={() => onExit(false)}>Cancel</Button>
+            <Button variant="primary" onClick={() => returnData()}>Ok</Button>
         </Modal.Footer>
     </Modal>
 }

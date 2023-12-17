@@ -38,10 +38,7 @@ async function addPackage(e: any){
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
-        packageId: e.packageId,
-        docDate: e.docDate,
-        reference: e.reference,
-        remarks: e.remarks    
+        name: e.name
     }
     
     try{
@@ -51,4 +48,18 @@ async function addPackage(e: any){
     }  
 }
 
-export { type PackageEntity, getPackages, getPackageById, deletePackage, addPackage};
+async function updatePackage(e: any){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    
+    const toSend = {
+        name: e.name
+    }
+    
+    try{
+        await axios.put('http://localhost:5230/api/package/' + e.packageId, toSend);
+    } catch (e: any){
+        throw e;
+    }  
+}
+
+export { type PackageEntity, getPackages, getPackageById, deletePackage, addPackage, updatePackage};

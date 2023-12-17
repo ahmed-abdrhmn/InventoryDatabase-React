@@ -5,17 +5,11 @@ import Form from 'react-bootstrap/Form';
 import { FormGroup } from 'react-bootstrap';
 
 function UpdateModal({show, data, onExit}: {show:boolean, data:any, onExit: (data: any)=>void}){
-    const branchIdRef: any = useRef(null);
-    const docDateRef: any = useRef(null);
-    const referenceRef: any = useRef(null);
-    const remarksRef: any = useRef(null);
+    const nameRef: any = useRef(null);
 
     function returnData(){
         const data = {
-            branchId: branchIdRef.current.value,
-            docDate: docDateRef.current.value,
-            reference: referenceRef.current.value,
-            remarks: remarksRef.current.value
+            name: nameRef.current.value,
         }
 
         onExit(data);
@@ -28,22 +22,8 @@ function UpdateModal({show, data, onExit}: {show:boolean, data:any, onExit: (dat
         <Modal.Body>
             <Form>
                 <FormGroup className="mb-3">
-                    <Form.Label>BranchId</Form.Label>
-                    <Form.Select ref={branchIdRef} defaultValue={data.currentData?.branch?.branchId || ''}>
-                        {data.branches.map((x: any) => <option defaultValue={x} key={x}>{x}</option>)}
-                    </Form.Select>
-                </FormGroup>
-                <FormGroup className="mb-3">
-                    <Form.Label>DocDate</Form.Label>
-                    <Form.Control type="date" ref={docDateRef} defaultValue={data.currentData?.docDate || ''}></Form.Control>
-                </FormGroup>
-                <FormGroup className="mb-3">
-                    <Form.Label>Reference</Form.Label>
-                    <Form.Control type="text" ref={referenceRef} defaultValue={data.currentData?.reference || ''}></Form.Control>
-                </FormGroup>
-                <FormGroup className="mb-3">
                     <Form.Label>Remarks</Form.Label>
-                    <Form.Control type="text" ref={remarksRef} defaultValue={data.currentData?.remarks || ''}></Form.Control>
+                    <Form.Control type="text" ref={nameRef} defaultValue={data.currentData?.name || ''}></Form.Control>
                 </FormGroup>
             </Form>
         </Modal.Body>
@@ -58,7 +38,7 @@ function UpdateModal({show, data, onExit}: {show:boolean, data:any, onExit: (dat
 //I wanted to provide an easier to grasp interface for the delete modal
 function useUpdateModal(){
     const [show, setShow] = useState(false);
-    const [data, setData] = useState({branches:[]});
+    const [data, setData] = useState({});
     const [onExit, setOnExit]: any[] = useState();
 
     function OpenModal(data: any): Promise<boolean>{        

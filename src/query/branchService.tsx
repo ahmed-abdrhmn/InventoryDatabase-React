@@ -38,17 +38,28 @@ async function addBranch(e: any){
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
-        branchId: e.branchId,
-        docDate: e.docDate,
-        reference: e.reference,
-        remarks: e.remarks    
+        name: e.name
     }
     
     try{
-        await axios.post('http://localhost:5230/api/Branch/',toSend);
+        await axios.post('http://localhost:5230/api/branch/',toSend);
     } catch (e: any){
         throw e;
     }  
 }
 
-export { type BranchEntity, getBranches, getBranchById, deleteBranch, addBranch};
+async function updateBranch(e: any){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    
+    const toSend = {
+        name: e.name
+    }
+    
+    try{
+        await axios.put('http://localhost:5230/api/branch/' + e.branchId, toSend);
+    } catch (e: any){
+        throw e;
+    }  
+}
+
+export { type BranchEntity, getBranches, getBranchById, deleteBranch, addBranch, updateBranch};

@@ -38,10 +38,7 @@ async function addItem(e: any){
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
-        itemId: e.itemId,
-        docDate: e.docDate,
-        reference: e.reference,
-        remarks: e.remarks    
+        name: e.name
     }
     
     try{
@@ -51,4 +48,18 @@ async function addItem(e: any){
     }  
 }
 
-export { type ItemEntity, getItems, getItemById, deleteItem, addItem};
+async function updateItem(e: any){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    
+    const toSend = {
+        name: e.name
+    }
+    
+    try{
+        await axios.put('http://localhost:5230/api/item/' + e.itemId, toSend);
+    } catch (e: any){
+        throw e;
+    }  
+}
+
+export { type ItemEntity, getItems, getItemById, deleteItem, addItem, updateItem};

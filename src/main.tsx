@@ -9,9 +9,9 @@ import {
 
 import Headers from './components/Pages/Header/Header.tsx';
 import Inventory from './components/Pages/Inventory/Inventory.tsx';
-import Package from './components/Pages/Package.tsx';
-import Item from './components/Pages/Item.tsx';
-import Branch from './components/Pages/Branch.tsx';
+import Package from './components/Pages/Package/Package.tsx';
+import Item from './components/Pages/Item/Item.tsx';
+import Branch from './components/Pages/Branch/Branch.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
