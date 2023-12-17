@@ -9,7 +9,7 @@ function DeleteModal({show, onExit}: {show:boolean, onExit: (data: boolean)=>voi
         </Modal.Header>
 
         <Modal.Body>
-            <p>Are you sure you want to delete this header?</p>
+            <p>Are you sure you want to delete this document?</p>
         </Modal.Body>
 
         <Modal.Footer style={{display:'flex',justifyContent:'space-between'}}>

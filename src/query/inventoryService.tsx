@@ -1,15 +1,20 @@
 import axios from "axios";
+import { HeaderEntity } from "./headerService";
+import { ItemEntity } from "./itemService";
+import { PackageEntity } from "./packageService";
 
 interface InventoryEntity {
-    inventoryInHeaderId: number,
-    branch: {
-        branchId: number,
-        name: string
-    },
-    docDate: string,
-    reference: string,
-    totalValue: number,
-    remarks: string
+    inventoryInDetailId: number,
+    inventoryInHeader: HeaderEntity,
+    serial: number,
+    item: ItemEntity,
+    package: PackageEntity,
+    batchNumber: string,
+    serialNumber: string,
+    expireDate: string,
+    quantity: number,
+    consumerPrice: number,
+    totalValue: number
 }
 
 async function getInventories(): Promise<InventoryEntity[]>{
@@ -45,10 +50,15 @@ async function addInventory(e: any){
     await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
-        branchId: e.branchId,
-        docDate: e.docDate,
-        reference: e.reference,
-        remarks: e.remarks    
+        inventoryInHeaderId: e.inventoryInHeaderId,
+        serial: e.serial,
+        itemId: e.itemId,
+        packageId: e.packageId,
+        batchNumber: e.batchNumber,
+        serialNumber: e.serialNumber,
+        expireDate: e.expireDate,
+        quantity: e.quantity,
+        consumerPrice: e.consumerPrice
     }
     
     try{
@@ -58,4 +68,27 @@ async function addInventory(e: any){
     }  
 }
 
-export { type InventoryEntity, getInventories, getInventoryById, deleteInventory, addInventory};
+async function updateInventory(e: any){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+
+    const toSend = {
+        inventoryInHeaderId: e.inventoryInHeaderId,
+        serial: e.serial,
+        itemId: e.itemId,
+        packageId: e.packageId,
+        batchNumber: e.batchNumber,
+        serialNumber: e.serialNumber,
+        expireDate: e.expireDate,
+        quantity: e.quantity,
+        consumerPrice: e.consumerPrice,
+        totalValue: e.totalValue 
+    }
+    
+    try{
+        await axios.put('http://localhost:5230/api/inventory/' + e.inventoryInDetailId, toSend);
+    } catch (e: any){
+        throw e;
+    } 
+}
+
+export { type InventoryEntity, getInventories, getInventoryById, deleteInventory, addInventory, updateInventory};
