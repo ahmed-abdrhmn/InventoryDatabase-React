@@ -6,7 +6,7 @@ interface BranchEntity {
 }
 
 async function getBranches(): Promise<BranchEntity[]>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/Branch/');
         return res.data;
@@ -26,7 +26,7 @@ async function getBranchById(id: number): Promise<BranchEntity>{
 }
 
 async function deleteBranch(id: number): Promise<void>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         await axios.delete('http://localhost:5230/api/Branch/'+id);
     } catch (e: any){
@@ -35,7 +35,7 @@ async function deleteBranch(id: number): Promise<void>{
 }
 
 async function addBranch(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name
@@ -49,7 +49,7 @@ async function addBranch(e: any){
 }
 
 async function updateBranch(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name

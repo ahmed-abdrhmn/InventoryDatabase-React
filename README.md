@@ -1,30 +1,24 @@
-# React + TypeScript + Vite
+# Introduction
+This is a frontend for the [Inventory-Database](https://github.com/ahmed-abdrhmn/Inventory-Database) backend that I wrote a while ago. This is written in typescript with react.js and bootstrap. Here, you can view and modify all the entities in the backend system, in an easy-to-use and smooth user interface.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Requirements
+ * Install Node.js.
 
-Currently, two official plugins are available:
+# Instructions
+To run this application do the following:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* clone this repository or download the zip file
+* open the root of the project in a terminal
+* run this command to install the required packages
 
-## Expanding the ESLint configuration
+      npm install
+* first make sure the [backend](https://github.com/ahmed-abdrhmn/Inventory-Database) is setup and running in another terminal
+* run this command to begin the applicaiton
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+      npm run dev
+* now you be able to naviage to the application using your browser
 
-- Configure the top-level `parserOptions` property like this:
+Hope you like this project.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Demo
+[video showcasing the frontend](https://github.com/ahmed-abdrhmn/InventoryDatabase-React/assets/96475434/9b714dd6-1a7f-4b5c-a575-a78f74cbaa37)

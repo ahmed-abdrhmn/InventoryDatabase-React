@@ -13,7 +13,7 @@ interface HeaderEntity {
 }
 
 async function getHeaders(): Promise<HeaderEntity[]>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/header/');
         return res.data;
@@ -23,7 +23,7 @@ async function getHeaders(): Promise<HeaderEntity[]>{
 }
 
 async function getHeaderById(id: number): Promise<HeaderEntity>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/header/'+id);
         return res.data;
@@ -33,7 +33,7 @@ async function getHeaderById(id: number): Promise<HeaderEntity>{
 }
 
 async function deleteHeader(id: number): Promise<void>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         await axios.delete('http://localhost:5230/api/header/'+id);
     } catch (e: any){
@@ -42,7 +42,7 @@ async function deleteHeader(id: number): Promise<void>{
 }
 
 async function addHeader(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         branchId: e.branchId,
@@ -59,7 +59,7 @@ async function addHeader(e: any){
 }
 
 async function updateHeader(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
 
     const toSend = {
         branchId: e.branchId,

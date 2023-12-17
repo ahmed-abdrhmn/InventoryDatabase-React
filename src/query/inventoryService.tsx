@@ -18,7 +18,7 @@ interface InventoryEntity {
 }
 
 async function getInventories(): Promise<InventoryEntity[]>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/inventory/');
         return res.data;
@@ -28,7 +28,7 @@ async function getInventories(): Promise<InventoryEntity[]>{
 }
 
 async function getInventoryById(id: number): Promise<InventoryEntity>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/inventory/'+id);
         return res.data;
@@ -38,7 +38,7 @@ async function getInventoryById(id: number): Promise<InventoryEntity>{
 }
 
 async function deleteInventory(id: number): Promise<void>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         await axios.delete('http://localhost:5230/api/inventory/'+id);
     } catch (e: any){
@@ -47,7 +47,7 @@ async function deleteInventory(id: number): Promise<void>{
 }
 
 async function addInventory(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         inventoryInHeaderId: e.inventoryInHeaderId,
@@ -69,7 +69,7 @@ async function addInventory(e: any){
 }
 
 async function updateInventory(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
 
     const toSend = {
         inventoryInHeaderId: e.inventoryInHeaderId,

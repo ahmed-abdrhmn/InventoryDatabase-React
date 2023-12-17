@@ -6,7 +6,7 @@ interface PackageEntity {
 }
 
 async function getPackages(): Promise<PackageEntity[]>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/package/');
         return res.data;
@@ -16,7 +16,7 @@ async function getPackages(): Promise<PackageEntity[]>{
 }
 
 async function getPackageById(id: number): Promise<PackageEntity>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/package/'+id);
         return res.data;
@@ -26,7 +26,7 @@ async function getPackageById(id: number): Promise<PackageEntity>{
 }
 
 async function deletePackage(id: number): Promise<void>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         await axios.delete('http://localhost:5230/api/package/'+id);
     } catch (e: any){
@@ -35,7 +35,7 @@ async function deletePackage(id: number): Promise<void>{
 }
 
 async function addPackage(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name
@@ -49,7 +49,7 @@ async function addPackage(e: any){
 }
 
 async function updatePackage(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name

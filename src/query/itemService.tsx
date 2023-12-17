@@ -6,7 +6,7 @@ interface ItemEntity {
 }
 
 async function getItems(): Promise<ItemEntity[]>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/item/');
         return res.data;
@@ -16,7 +16,7 @@ async function getItems(): Promise<ItemEntity[]>{
 }
 
 async function getItemById(id: number): Promise<ItemEntity>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         const res = await axios.get('http://localhost:5230/api/item/'+id);
         return res.data;
@@ -26,7 +26,7 @@ async function getItemById(id: number): Promise<ItemEntity>{
 }
 
 async function deleteItem(id: number): Promise<void>{
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     try{
         await axios.delete('http://localhost:5230/api/item/'+id);
     } catch (e: any){
@@ -35,7 +35,7 @@ async function deleteItem(id: number): Promise<void>{
 }
 
 async function addItem(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name
@@ -49,7 +49,7 @@ async function addItem(e: any){
 }
 
 async function updateItem(e: any){
-    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+    //await new Promise(r => setTimeout(r,1000)); //wait for 1 second
     
     const toSend = {
         name: e.name
