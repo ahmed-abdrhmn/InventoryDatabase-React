@@ -69,7 +69,6 @@ function useUpdateModal(){
             console.log('Promise Began executing')
             setOnExit(()=>(del: boolean)=>{     //Assigning a function that returns a function since set* functions of react treats functions specially
                 console.log('OnExit has been done')
-                console.log(del)
                 setShow(false);
                 resolve(del);
             });

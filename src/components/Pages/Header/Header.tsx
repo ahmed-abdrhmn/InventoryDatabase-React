@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Card from "react-bootstrap/Card"
-import { HeaderEntity, addHeader, deleteHeader, getHeaders } from "../../../query/headerService";
+import { HeaderEntity, addHeader, deleteHeader, getHeaders, updateHeader } from "../../../query/headerService";
 import { getBranches } from "../../../query/branchService";
 import Button from 'react-bootstrap/Button';
 
@@ -22,6 +22,11 @@ function Headers(): ReactNode[] | ReactNode{
 
     const addHeaderMut = useMutation(
         {mutationFn: addHeader,
+        onSuccess: () => client.invalidateQueries({queryKey: ['header']}) 
+    })
+
+    const updateHeaderMut = useMutation(
+        {mutationFn: updateHeader,
         onSuccess: () => client.invalidateQueries({queryKey: ['header']}) 
     })
 
@@ -63,17 +68,24 @@ function Headers(): ReactNode[] | ReactNode{
     }
 
     async function updateItem(id: number){
+        console.log("update button clicked");
         let branchIds: number[] = []
         if (branches.isSuccess){
             branchIds = branches.data.map(x => x.branchId)
         }
         
-        await UpdateModal.Open(
+        let value: any = await UpdateModal.Open(
             {
                 branches:branchIds,
                 currentData: headers?.data?.find(x => x.inventoryInHeaderId == id) //I don't think I need to check if headers.data is loaded right?
             }
         ); //wait until the dialog closes
+        
+        console.log("opened")
+        if (value !== false){
+            value.inventoryInHeaderId = id; //the update function expects that to be set
+            updateHeaderMut.mutate(value);
+        }
     }
 
     //The list of Cards
@@ -97,7 +109,7 @@ function Headers(): ReactNode[] | ReactNode{
                 </Card.Text>
                 <hr />
                 <div className="button-base">
-                    <Button><i className="bi bi-pen-fill" onClick={()=>updateItem(i.inventoryInHeaderId)}></i></Button> {/*Edit button*/}
+                    <Button variant="primary" onClick={()=>updateItem(i.inventoryInHeaderId)}><i className="bi bi-pen-fill"></i></Button> {/*Edit button*/}
                     <Button variant="danger" onClick={()=>deleteItem(i.inventoryInHeaderId)}><i className="bi bi-trash-fill"></i></Button> {/*Delete button*/}
                 </div>
             </Card.Body>

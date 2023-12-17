@@ -58,4 +58,21 @@ async function addHeader(e: any){
     }  
 }
 
-export { type HeaderEntity, getHeaders, getHeaderById, deleteHeader, addHeader};
+async function updateHeader(e: any){
+    await new Promise(r => setTimeout(r,1000)); //wait for 1 second
+
+    const toSend = {
+        branchId: e.branchId,
+        docDate: e.docDate,
+        reference: e.reference,
+        remarks: e.remarks    
+    }
+    
+    try{
+        await axios.put('http://localhost:5230/api/header/' + e.inventoryInHeaderId, toSend);
+    } catch (e: any){
+        throw e;
+    } 
+}
+
+export { type HeaderEntity, getHeaders, getHeaderById, deleteHeader, addHeader, updateHeader};
